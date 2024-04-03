@@ -1,13 +1,13 @@
 package ru.zubov;
 
-import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
-@Log4j2
 @SpringBootApplication
-public class Main {
+@EnableEurekaServer
+public class PlannerServerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(PlannerServerApplication.class, args);
     }
 }
