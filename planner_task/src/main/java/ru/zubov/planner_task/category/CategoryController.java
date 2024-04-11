@@ -26,11 +26,9 @@ public class CategoryController {
         if (category.getId() != null && category.getId() != 0) {
             return new ResponseEntity<>("id param must be NULL", HttpStatus.NOT_ACCEPTABLE);
         }
-
         if (category.getTitle() == null || category.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
         }
-
         return ResponseEntity.ok(categoryService.add(category));
     }
 
@@ -50,7 +48,6 @@ public class CategoryController {
         if (category.getId() == null || category.getId() == 0) {
             return new ResponseEntity<>("id param: id", HttpStatus.NOT_ACCEPTABLE);
         }
-
         if (category.getTitle() == null || category.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
         }
