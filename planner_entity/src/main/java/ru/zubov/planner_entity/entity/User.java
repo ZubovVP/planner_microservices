@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "user_data")
+@Table(name = "user_data", schema = "users")
 @Getter
 @Setter
 @AllArgsConstructor

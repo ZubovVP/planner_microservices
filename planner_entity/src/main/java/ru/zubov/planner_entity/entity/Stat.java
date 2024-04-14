@@ -1,6 +1,5 @@
 package ru.zubov.planner_entity.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import java.util.Objects;
 
 @Entity
-@Table(name = "stat")
+@Table(name = "stat", schema = "tasks")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

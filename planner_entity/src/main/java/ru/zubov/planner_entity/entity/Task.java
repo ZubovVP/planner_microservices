@@ -1,6 +1,5 @@
 package ru.zubov.planner_entity.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "task")
+@Table(name = "task", schema = "tasks")
 @Getter
 @Setter
 @AllArgsConstructor
