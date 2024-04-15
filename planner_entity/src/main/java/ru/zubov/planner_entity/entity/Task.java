@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "task", schema = "tasks")
+@Table(name = "task", schema = "tasks", catalog = "planner_task")
 @Getter
 @Setter
 @AllArgsConstructor

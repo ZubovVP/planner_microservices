@@ -12,9 +12,9 @@ public interface PriorityRepository extends JpaRepository<Priority, Long> {
     @Query("SELECT p FROM Priority p WHERE " +
             "(:title IS NULL OR :title='' " +
             "OR LOWER(p.title) LIKE LOWER(CONCAT('%', :title, '%'))) " +
-            "AND p.user.email=:email " +
+            "AND p.userId =: userId " +
             "ORDER by p.title ASC")
-    List<Priority> findByTitle(@Param("title") String title, @Param("email") String email);
+    List<Priority> findByTitle(@Param("title") String title, @Param("userId") Long userId);
 
-    List<Priority> findAllByUserEmailOrderByIdAsc(String email);
+    List<Priority> findAllByUserIdOrderByIdAsc(Long userId);
 }

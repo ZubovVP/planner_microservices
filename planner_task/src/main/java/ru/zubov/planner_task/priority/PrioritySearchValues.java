@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrioritySearchValues {
-    private String email;
+    private Long userId;
     private String title;
 }

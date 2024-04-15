@@ -19,8 +19,8 @@ public class PriorityController {
     private final PriorityService priorityService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Priority>> findById(@RequestParam String email) {
-        return ResponseEntity.ok(priorityService.findAll(email));
+    public ResponseEntity<List<Priority>> findById(@RequestParam Long userId) {
+        return ResponseEntity.ok(priorityService.findAll(userId));
     }
 
     @PostMapping("/add")
@@ -65,10 +65,10 @@ public class PriorityController {
 
     @GetMapping("/search")
     public ResponseEntity<?> search(@ModelAttribute PrioritySearchValues prioritySearchValues) {
-        if (isBlank(prioritySearchValues.getEmail())) {
+        if (prioritySearchValues.getUserId() == null) {
             return new ResponseEntity<>("missed param: email", HttpStatus.NOT_ACCEPTABLE);
         }
-        List<Priority> list = priorityService.findByTitle(prioritySearchValues.getTitle(), prioritySearchValues.getEmail());
+        List<Priority> list = priorityService.findByTitle(prioritySearchValues.getTitle(), prioritySearchValues.getUserId());
         return ResponseEntity.ok(list);
     }
 

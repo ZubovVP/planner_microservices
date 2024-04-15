@@ -32,11 +32,11 @@ public class PriorityService {
         return priorityRepository.findById(id);
     }
 
-    public List<Priority> findAll(String email) {
-        return priorityRepository.findAllByUserEmailOrderByIdAsc(email);
+    public List<Priority> findAll(Long userId) {
+        return priorityRepository.findAllByUserIdOrderByIdAsc(userId);
     }
 
-    public List<Priority> findByTitle(String title, String email) {
-        return priorityRepository.findByTitle(title, email);
+    public List<Priority> findByTitle(String title, Long userId) {
+        return priorityRepository.findByTitle(title, userId);
     }
 }
