@@ -19,7 +19,7 @@ public class PriorityController {
     private final PriorityService priorityService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Priority>> findById(@RequestParam Long userId) {
+    public ResponseEntity<List<Priority>> findById(@RequestParam("userId") Long userId) {
         return ResponseEntity.ok(priorityService.findAll(userId));
     }
 
@@ -29,11 +29,11 @@ public class PriorityController {
             return new ResponseEntity<>("id param must be NULL", HttpStatus.NOT_ACCEPTABLE);
         }
 
-        if (priority.getTitle() == null || priority.getTitle().trim().length() == 0) {
+        if (priority.getTitle() == null || priority.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
         }
 
-        if (priority.getColor() == null || priority.getColor().trim().length() == 0) {
+        if (priority.getColor() == null || priority.getColor().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : color", HttpStatus.NOT_ACCEPTABLE);
         }
         return ResponseEntity.ok(priorityService.add(priority));
@@ -52,11 +52,11 @@ public class PriorityController {
 
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody Priority priority) {
-        if (priority.getId() == null && priority.getId() == 0) {
+        if (priority.getId() == null || priority.getId() == 0) {
             return new ResponseEntity<>("id param: id", HttpStatus.NOT_ACCEPTABLE);
         }
 
-        if (priority.getTitle() == null && priority.getTitle().trim().length() == 0) {
+        if (priority.getTitle() == null && priority.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
         }
         priorityService.update(priority);
