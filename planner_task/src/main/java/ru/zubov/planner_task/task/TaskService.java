@@ -21,8 +21,8 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public List<Task> findAll(String email) {
-        return taskRepository.findByUserEmailOrderByTitleAsc(email);
+    public List<Task> findAll(Long userId) {
+        return taskRepository.findByUserIdOrderByTitleAsc(userId);
     }
 
     public Task add(Task task) {
@@ -37,7 +37,7 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public Page<Task> findByParams(String text, Boolean completed, Long priorityId, Long categoryId, String email, LocalDateTime dateFrom, LocalDateTime dateTo, PageRequest paging) {
-        return taskRepository.findByParams(text, completed, priorityId, categoryId, email, dateFrom, dateTo, paging);
+    public Page<Task> findByParams(String text, Boolean completed, Long priorityId, Long categoryId, Long userId, LocalDateTime dateFrom, LocalDateTime dateTo, PageRequest paging) {
+        return taskRepository.findByParams(text, completed, priorityId, categoryId, userId, dateFrom, dateTo, paging);
     }
 }

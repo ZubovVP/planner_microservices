@@ -1,20 +1,19 @@
 package ru.zubov.planner_task.task;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskSearchValues {
-    private final String title;
-    private final Integer completed;
-    private final Long priorityId;
-    private final Long categoryId;
-    private String email;
+    private String title;
+    private Integer completed;
+    private Long priorityId;
+    private Long categoryId;
+    private Long userId;
 
     private LocalDateTime dateFrom;
     private LocalDateTime dateTo;
@@ -24,6 +23,6 @@ public class TaskSearchValues {
     private Integer pageSize;
 
     //сортировка
-    private final String sortColumn;
-    private final String sortDirection;
+    private String sortColumn;
+    private String sortDirection;
 }

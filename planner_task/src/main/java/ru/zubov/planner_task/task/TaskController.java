@@ -36,8 +36,8 @@ public class TaskController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Task>> findAll(@RequestParam String email) {
-        List<Task> result = taskService.findAll(email);
+    public ResponseEntity<List<Task>> findAll(@RequestParam Long userId) {
+        List<Task> result = taskService.findAll(userId);
 
         return ResponseEntity.ok(result);
     }
@@ -81,7 +81,7 @@ public class TaskController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<Task>> search(@ModelAttribute TaskSearchValues taskSearchValues) {
+    public ResponseEntity<Page<Task>> search(@RequestBody TaskSearchValues taskSearchValues) {
         String title = taskSearchValues.getTitle() != null ? taskSearchValues.getTitle() : null;
 
         // конвертируем Boolean в Integer
@@ -99,10 +99,10 @@ public class TaskController {
         Integer pageNumber = taskSearchValues.getPageNumber() != null ? taskSearchValues.getPageNumber() : null;
         Integer pageSize = taskSearchValues.getPageSize() != null ? taskSearchValues.getPageSize() : null;
 
-        String email = taskSearchValues.getEmail() != null ? taskSearchValues.getEmail() : null; // для показа задач только этого пользователя
+        Long userId = taskSearchValues.getUserId() != null ? taskSearchValues.getUserId() : null; // для показа задач только этого пользователя
 
-        if (email == null || email.trim().isEmpty()) {
-            return new ResponseEntity("missed param: email", HttpStatus.NOT_ACCEPTABLE);
+        if (userId == null) {
+            return new ResponseEntity("missed param: userId", HttpStatus.NOT_ACCEPTABLE);
         }
 
         LocalDateTime dateFrom = null;
@@ -132,7 +132,7 @@ public class TaskController {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
 
         // результат запроса с постраничным выводом
-        Page<Task> result = taskService.findByParams(title, completed, priorityId, categoryId, email, dateFrom, dateTo, pageRequest);
+        Page<Task> result = taskService.findByParams(title, completed, priorityId, categoryId, userId, dateFrom, dateTo, pageRequest);
 
         // результат запроса
         return ResponseEntity.ok(result);

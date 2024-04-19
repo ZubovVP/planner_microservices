@@ -23,14 +23,14 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             "(cast(:dateFrom as timestamp) is null or t.taskDate>=:dateFrom) and " +
             "(cast(:dateTo as timestamp) is null or t.taskDate<=:dateTo)" +
             ") and " +
-            "(t.user.email=:email)" // показывать задачи только определенного пользователя, а не все
+            "(t.userId=:userId)" // показывать задачи только определенного пользователя, а не все
     )
         // искать по всем переданным параметрам (пустые параметры учитываться не будут)
     Page<Task> findByParams(@Param("title") String title,
                             @Param("completed") Boolean completed,
                             @Param("priorityId") Long priorityId,
                             @Param("categoryId") Long categoryId,
-                            @Param("email") String email,
+                            @Param("userId") Long userId,
                             @Param("dateFrom") LocalDateTime dateFrom,
                             @Param("dateTo") LocalDateTime dateTo,
                             Pageable pageable
@@ -38,5 +38,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
 
     // поиск всех задач конкретного пользователя
-    List<Task> findByUserEmailOrderByTitleAsc(String email);
+    List<Task> findByUserIdOrderByTitleAsc(Long userId);
 }
