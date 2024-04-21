@@ -3,14 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>ru.zubov</groupId>
+        <artifactId>spring-micro-demo</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>ru.zubov</groupId>
     <artifactId>planner_entity</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>planner_entity</name>
     <description>planner_entity</description>
     <properties>
