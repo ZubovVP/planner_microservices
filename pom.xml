@@ -17,6 +17,9 @@
     <modules>
         <module>planner_task</module>
         <module>planner_entity</module>
+        <module>planner_utils</module>
+        <module>planner_gateway</module>
+        <module>planner_server</module>
     </modules>
     <dependencyManagement>
         <dependencies>

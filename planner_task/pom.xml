@@ -89,6 +89,10 @@
             <groupId>ru.zubov</groupId>
             <artifactId>planner_entity</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.zubov</groupId>
+            <artifactId>planner_utils</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
