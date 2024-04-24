@@ -14,11 +14,13 @@ import org.springframework.util.StopWatch;
 public class LoggingAspect {
 
     //Аспект будет выполняться для всех методов контроллеров
-    @Around("execution(* ru.zubov.planner_task.task..*(..))")
+
+    @Around("(@within(org.springframework.web.bind.annotation.RestController) || @within(org.springframework.stereotype.Controller)) " +
+            "&& execution(* ru.zubov..*(..))")
     public Object profileControllerMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
 
-        //Получить информацию о том, какой клаасс и метод выполняется
+        //Получить информацию о том, какой класс и метод выполняется
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();
 
