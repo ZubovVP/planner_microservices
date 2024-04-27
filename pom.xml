@@ -12,7 +12,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <modules>
         <module>planner_task</module>
@@ -26,11 +26,6 @@
             <dependency>
                 <groupId>ru.zubov</groupId>
                 <artifactId>planner_entity</artifactId>
-                <version>0.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.zubov</groupId>
-                <artifactId>planner_task</artifactId>
                 <version>0.0.1</version>
             </dependency>
             <dependency>

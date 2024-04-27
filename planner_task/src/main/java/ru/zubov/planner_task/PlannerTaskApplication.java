@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"ru.zubov.planner_task"})
 @EntityScan(basePackages = {"ru.zubov"})
-@ComponentScan(basePackages = {"ru.zubov"})
+//@ComponentScan(basePackages = {"ru.zubov"})
 public class PlannerTaskApplication {
 
     public static void main(String[] args) {
