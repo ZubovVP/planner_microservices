@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/planner_entity/pom.xml" />
         <option value="$PROJECT_DIR$/planner_task/pom.xml" />
         <option value="$PROJECT_DIR$/planner_utils/pom.xml" />
+        <option value="$PROJECT_DIR$/planner_user/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />

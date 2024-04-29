@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="planner_task:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/planner_task_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="planner_task/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="planner_task" />
+          <element id="module-output" name="planner_entity" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
