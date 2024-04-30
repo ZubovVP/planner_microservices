@@ -20,6 +20,7 @@
         <module>planner_utils</module>
         <module>planner_gateway</module>
         <module>planner_server</module>
+        <module>planner_user</module>
     </modules>
     <dependencyManagement>
         <dependencies>
