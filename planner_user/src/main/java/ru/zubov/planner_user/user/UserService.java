@@ -1,5 +1,6 @@
 package ru.zubov.planner_user.user;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,14 +13,17 @@ import ru.zubov.planner_entity.entity.User;
 public class UserService {
     private UserRepository repository;
 
+    @Transactional
     public User save(User user) {
         return repository.save(user);
     }
 
+    @Transactional
     public void deleteByUserId(Long id) {
         repository.deleteById(id);
     }
 
+    @Transactional
     public void deleteByUserEmail(String email) {
         repository.deleteByEmail(email);
     }
