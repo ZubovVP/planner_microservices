@@ -32,6 +32,10 @@ public class UserService {
         return repository.findById(id).orElseThrow();
     }
 
+    public User findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
     public Page<User> findByParams(String email, String username, Pageable pageable) {
         return repository.findByParams(email, username, pageable);
     }
