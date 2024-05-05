@@ -94,7 +94,7 @@ public class UserController {
         if (id == null || id == 0) {
             return new ResponseEntity<>("missed param: id", HttpStatus.NOT_ACCEPTABLE);
         }
-        User user = null;
+        User user;
         try {
             user = userService.findById(id);
         } catch (EmptyResultDataAccessException e) {
