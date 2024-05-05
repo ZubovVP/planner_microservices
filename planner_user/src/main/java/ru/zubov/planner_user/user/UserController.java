@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody User user) {
-        if (user.getId() != null || user.getId() != 0) {
+        if (user.getId() != null && user.getId() != 0) {
             return new ResponseEntity<>("id must be null", HttpStatus.NOT_ACCEPTABLE);
         }
 

@@ -11,7 +11,7 @@ import ru.zubov.planner_entity.entity.User;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private UserRepository repository;
+    private final UserRepository repository;
 
     @Transactional
     public User save(User user) {
