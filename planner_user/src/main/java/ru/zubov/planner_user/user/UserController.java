@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.zubov.planner_entity.entity.User;
 
-import java.time.LocalDateTime;
-
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -62,22 +60,22 @@ public class UserController {
     }
 
     @PostMapping("/deleteById")
-    public ResponseEntity<?> deleteById(@RequestBody Long userId) {
-        if (userId == null || userId == 0) {
+    public ResponseEntity<?> deleteById(@RequestBody Long id) {
+        if (id == null || id == 0) {
             return new ResponseEntity<>("missed param: id", HttpStatus.NOT_ACCEPTABLE);
         }
         try {
-            userService.deleteByUserId(userId);
+            userService.deleteByUserId(id);
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
-            return new ResponseEntity<>("userId = " + userId + " not found in DB", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("id = " + id + " not found in DB", HttpStatus.NOT_ACCEPTABLE);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/deleteByEmail")
     public ResponseEntity<?> deleteByEmail(@RequestBody String email) {
-        if (isNotBlank(email)) {
+        if (isBlank(email)) {
             return new ResponseEntity<>("missed param: email", HttpStatus.NOT_ACCEPTABLE);
         }
         try {
