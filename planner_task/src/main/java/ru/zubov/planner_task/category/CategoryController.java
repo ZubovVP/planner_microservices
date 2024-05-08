@@ -5,7 +5,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClient;
 import ru.zubov.planner_entity.entity.Category;
+import ru.zubov.utils.PlannerUtilsApplication;
+import ru.zubov.utils.restTemplate.UserRestBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +18,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
+    private final UserRestBuilder userRestBuilder;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Category>> findByUserId(@RequestParam("userId") Long userId) {
-        return ResponseEntity.ok(categoryService.findAll(userId));
+    public ResponseEntity<?> findByUserId(@RequestParam("userId") Long userId) {
+        if (userRestBuilder.existUser(userId)) {
+            return ResponseEntity.ok(categoryService.findAll(userId));
+        } else {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @PostMapping("/add")
@@ -28,6 +36,9 @@ public class CategoryController {
         }
         if (category.getTitle() == null || category.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
+        }
+        if (userRestBuilder.existUser(category.getId())) {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
         }
         return ResponseEntity.ok(categoryService.add(category));
     }
@@ -51,6 +62,9 @@ public class CategoryController {
         if (category.getTitle() == null || category.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
         }
+        if (userRestBuilder.existUser(category.getId())) {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
+        }
         categoryService.update(category);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -59,6 +73,9 @@ public class CategoryController {
     public ResponseEntity<?> search(@ModelAttribute CategorySearchValues categorySearchValues) {
         if (categorySearchValues.getUserId() == null || categorySearchValues.getUserId() == 0) {
             return new ResponseEntity<>("missed param: userId", HttpStatus.NOT_ACCEPTABLE);
+        }
+        if (userRestBuilder.existUser(categorySearchValues.getUserId())) {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
         }
         List<Category> list = categoryService.findByTitle(categorySearchValues.getTitle(), categorySearchValues.getUserId());
         return ResponseEntity.ok(list);
