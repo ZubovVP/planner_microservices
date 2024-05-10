@@ -1,13 +1,12 @@
 package ru.zubov.planner_task.category;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClient;
 import ru.zubov.planner_entity.entity.Category;
-import ru.zubov.utils.PlannerUtilsApplication;
 import ru.zubov.utils.restTemplate.UserRestBuilder;
 
 import java.util.List;
@@ -15,10 +14,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CategoryController {
-    private final CategoryService categoryService;
-    private final UserRestBuilder userRestBuilder;
+    private CategoryService categoryService;
+    private UserRestBuilder userRestBuilder;
 
     @GetMapping("/all")
     public ResponseEntity<?> findByUserId(@RequestParam("userId") Long userId) {
