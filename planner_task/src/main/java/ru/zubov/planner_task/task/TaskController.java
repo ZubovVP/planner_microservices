@@ -1,6 +1,6 @@
 package ru.zubov.planner_task.task;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.zubov.planner_entity.entity.Task;
+import ru.zubov.utils.restTemplate.UserRestBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,9 +17,10 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/task")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class TaskController {
-    private final TaskService taskService;
+    private TaskService taskService;
+    private UserRestBuilder userRestBuilder;
     public static final String ID_COLUMN = "id"; // имя столбца id
 
     @PutMapping("/add")
@@ -31,15 +33,23 @@ public class TaskController {
             return new ResponseEntity<>("missed param: title", HttpStatus.NOT_ACCEPTABLE);
         }
 
-        return ResponseEntity.ok(taskService.add(task));
-
+        if (userRestBuilder.existUser(task.getUserId())) {
+            return ResponseEntity.ok(taskService.add(task));
+        } else {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Task>> findAll(@RequestParam Long userId) {
-        List<Task> result = taskService.findAll(userId);
+    public ResponseEntity<?> findAll(@RequestParam Long userId) {
+        if (userRestBuilder.existUser(userId)) {
+            List<Task> result = taskService.findAll(userId);
+            return ResponseEntity.ok(result);
+        } else {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
+        }
 
-        return ResponseEntity.ok(result);
+
     }
 
     @PutMapping("/update")
@@ -52,9 +62,12 @@ public class TaskController {
             return new ResponseEntity<>("missed param: title", HttpStatus.NOT_ACCEPTABLE);
         }
 
-        taskService.update(task);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (userRestBuilder.existUser(task.getUserId())) {
+            taskService.update(task);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
@@ -81,7 +94,7 @@ public class TaskController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<Task>> search(@RequestBody TaskSearchValues taskSearchValues) {
+    public ResponseEntity<?> search(@RequestBody TaskSearchValues taskSearchValues) {
         String title = taskSearchValues.getTitle() != null ? taskSearchValues.getTitle() : null;
 
         // конвертируем Boolean в Integer
@@ -101,8 +114,8 @@ public class TaskController {
 
         Long userId = taskSearchValues.getUserId() != null ? taskSearchValues.getUserId() : null; // для показа задач только этого пользователя
 
-        if (userId == null) {
-            return new ResponseEntity("missed param: userId", HttpStatus.NOT_ACCEPTABLE);
+        if (!userRestBuilder.existUser(userId)) {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
         }
 
         LocalDateTime dateFrom = null;

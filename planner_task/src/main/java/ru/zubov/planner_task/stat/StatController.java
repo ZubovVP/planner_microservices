@@ -7,18 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.zubov.planner_entity.entity.Stat;
+import ru.zubov.utils.restTemplate.UserRestBuilder;
 
 @RestController
 @AllArgsConstructor
 public class StatController {
-    private final StatService statService;
+    private StatService statService;
+    private UserRestBuilder userRestBuilder;
 
     @GetMapping("/stat")
     public ResponseEntity<?> findByUser(@RequestParam("userId") Long userId) {
-        if (userId == null) {
-            return new ResponseEntity<>("missed param: userId", HttpStatus.NOT_ACCEPTABLE);
+        if (userRestBuilder.existUser(userId)) {
+            Stat stat = statService.findStat(userId);
+            return stat != null ? ResponseEntity.ok(statService.findStat(userId)) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
         }
-        Stat stat = statService.findStat(userId);
-        return stat != null ? ResponseEntity.ok(statService.findStat(userId)) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

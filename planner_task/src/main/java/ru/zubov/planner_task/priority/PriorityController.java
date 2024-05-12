@@ -1,22 +1,22 @@
 package ru.zubov.planner_task.priority;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.zubov.planner_entity.entity.Priority;
+import ru.zubov.utils.restTemplate.UserRestBuilder;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
 @RestController
 @RequestMapping("/priority")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PriorityController {
     private final PriorityService priorityService;
+    private final UserRestBuilder userRestBuilder;
 
     @GetMapping("/all")
     public ResponseEntity<List<Priority>> findById(@RequestParam("userId") Long userId) {
@@ -25,6 +25,7 @@ public class PriorityController {
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody Priority priority) {
+
         if (priority.getId() != null && priority.getId() != 0) {
             return new ResponseEntity<>("id param must be NULL", HttpStatus.NOT_ACCEPTABLE);
         }
@@ -36,7 +37,11 @@ public class PriorityController {
         if (priority.getColor() == null || priority.getColor().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : color", HttpStatus.NOT_ACCEPTABLE);
         }
-        return ResponseEntity.ok(priorityService.add(priority));
+        if (userRestBuilder.existUser(priority.getUserId())) {
+            return ResponseEntity.ok(priorityService.add(priority));
+        } else {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
@@ -59,17 +64,23 @@ public class PriorityController {
         if (priority.getTitle() == null && priority.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
         }
-        priorityService.update(priority);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (userRestBuilder.existUser(priority.getUserId())) {
+            priorityService.update(priority);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
+        }
+
     }
 
     @GetMapping("/search")
     public ResponseEntity<?> search(@ModelAttribute PrioritySearchValues prioritySearchValues) {
-        if (prioritySearchValues.getUserId() == null) {
-            return new ResponseEntity<>("missed param: email", HttpStatus.NOT_ACCEPTABLE);
+        if (userRestBuilder.existUser(prioritySearchValues.getUserId())) {
+            List<Priority> list = priorityService.findByTitle(prioritySearchValues.getTitle(), prioritySearchValues.getUserId());
+            return ResponseEntity.ok(list);
+        } else {
+            return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
         }
-        List<Priority> list = priorityService.findByTitle(prioritySearchValues.getTitle(), prioritySearchValues.getUserId());
-        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/id")
