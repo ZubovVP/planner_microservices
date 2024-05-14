@@ -1,12 +1,12 @@
 package ru.zubov.planner_task.category;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.zubov.planner_entity.entity.Category;
+import ru.zubov.planner_task.feign.UserFeignClient;
 import ru.zubov.utils.restTemplate.UserRestBuilder;
 
 import java.util.List;
@@ -17,11 +17,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CategoryController {
     private CategoryService categoryService;
+    //Можно использовать сервис для проверки наличия юзера через RestClient
     private UserRestBuilder userRestBuilder;
+    //Можно использовать сервис для проверки наличия юзера через Feign
+    private UserFeignClient userFeignClient;
 
     @GetMapping("/all")
     public ResponseEntity<?> findByUserId(@RequestParam("userId") Long userId) {
-        if (userRestBuilder.existUser(userId)) {
+        if (userFeignClient.findById(userId) != null) {
             return ResponseEntity.ok(categoryService.findAll(userId));
         } else {
             return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
@@ -36,7 +39,7 @@ public class CategoryController {
         if (category.getTitle() == null || category.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
         }
-        if (userRestBuilder.existUser(category.getId())) {
+        if (userFeignClient.findById(category.getUserId()) != null) {
             return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
         }
         return ResponseEntity.ok(categoryService.add(category));
@@ -61,7 +64,7 @@ public class CategoryController {
         if (category.getTitle() == null || category.getTitle().trim().isEmpty()) {
             return new ResponseEntity<>("missed param : title", HttpStatus.NOT_ACCEPTABLE);
         }
-        if (userRestBuilder.existUser(category.getId())) {
+        if (userFeignClient.findById(category.getUserId()) != null) {
             return new ResponseEntity<>("don't found user by id", HttpStatus.NOT_ACCEPTABLE);
         }
         categoryService.update(category);
