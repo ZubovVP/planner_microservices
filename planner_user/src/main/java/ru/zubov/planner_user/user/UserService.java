@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).get();
     }
 
     public User findByEmail(String email) {
