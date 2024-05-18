@@ -19,6 +19,7 @@ public class FeignExceptionHandler implements ErrorDecoder {
         return switch (response.status()) {
             case 406 -> new ResponseStatusException(HttpStatusCode.valueOf(406), readMessage(response));
             case 404 -> new ResponseStatusException(HttpStatusCode.valueOf(404), readMessage(response));
+            case 500 -> new ResponseStatusException(HttpStatusCode.valueOf(500), readMessage(response));
             default -> null;
         };
     }
