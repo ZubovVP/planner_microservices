@@ -6,18 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "planner-user")
 public interface UserFeignClient {
 
-    @Retryable(retryFor = {RuntimeException.class}, maxAttempts = 3, backoff = @Backoff(3000), recover ="recover" )
+    @Retryable(retryFor = {RuntimeException.class}, maxAttempts = 3, backoff = @Backoff(3000))
     @GetMapping("/user/id/{id}")
     ResponseEntity<?> findById(@PathVariable("id") Long id);
-
-    @Recover
-    static ResponseEntity<?> recover(Throwable t) {
-        return new ResponseEntity<>("Not working server", HttpStatus.NOT_ACCEPTABLE);
-    }
 }
