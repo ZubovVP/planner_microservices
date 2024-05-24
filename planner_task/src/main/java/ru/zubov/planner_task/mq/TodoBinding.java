@@ -4,7 +4,7 @@ import org.springframework.messaging.MessageChannel;
 
 //Интерфейс который нужен для работы mq
 public interface TodoBinding {
-    String OUTPUT_CHANNEL = "todoOutputChannel";
+    String INPUT_CHANNEL = "todoOutputChannel";
 
     @Input(OUTPUT_CHANNEL)
     MessageChannel todoOutputChannel();
