@@ -1,24 +1,23 @@
 package ru.zubov.planner_user.user.mq;
 
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-@Component
-@EnableBinding(TodoBinding.class)
+@Service
+@RequiredArgsConstructor
 public class MessageProducer {
+    private final RabbitTemplate rabbitTemplate;
 
-    private TodoBinding todoBinding;
+    @Value("${rabbitmq.exchange.name}")
+    private String exchange;
 
-    public MessageProducer(TodoBinding todoBinding) {
-        this.todoBinding = todoBinding;
-    }
+    @Value("${rabbitmq.routing.key}")
+    private String routingKey;
 
     //Отправка сообщения при создании нового пользователя
     public void initUserData(Long id) {
-        Message message = MessageBuilder.withPayload(id).build();
-
-        //выбираем канал и отправляем сообщение
-        todoBinding.todoOutputChannel().send(message);
+        rabbitTemplate.convertAndSend(exchange, routingKey, id);
     }
 }

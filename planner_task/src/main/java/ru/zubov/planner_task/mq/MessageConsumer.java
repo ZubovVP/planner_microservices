@@ -1,15 +1,15 @@
 package ru.zubov.planner_task.mq;
 
-import org.springframework.stereotype.Component;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Service;
 
-@Component
-@EnableBinding(TodoBinding.class)
+@Service
 public class MessageConsumer {
 
-    @StreamListener(target = TodoBinding.INPUT_CHANNEL)
+
+    @RabbitListener(queues = {"knfQueue"})
     public void initTestData(Long userId) {
         System.out.println("User " + userId + " created!");
-
     }
 
 }
