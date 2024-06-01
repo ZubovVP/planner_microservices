@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.zubov.planner_entity.entity.User;
-import ru.zubov.planner_user.user.mq.MessageProducer;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -21,7 +20,6 @@ public class UserController {
     public static final String ID_COLUMN = "id"; // имя столбца id
 
     private final UserService userService;
-    private final MessageProducer messageProducer;
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody User user) {
@@ -41,9 +39,9 @@ public class UserController {
 
         User newUser = userService.save(user);
 
-        if (newUser.getId() != null) {  //если пользователь создан
-            messageProducer.initUserData(newUser.getId());     //отправляем сообщение с использованием mq
-        }
+//        if (newUser.getId() != null) {  //если пользователь создан
+//            messageProducer.sendMessage(String.valueOf(newUser.getId()));     //отправляем сообщение с использованием mq
+//        }
         return ResponseEntity.ok(newUser);
     }
 
