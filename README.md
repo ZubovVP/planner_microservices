@@ -54,13 +54,24 @@ Kafka - это броккер сообщений, который позволя�
 # Добалвение зависимостей
 Для того, чтобы можно было использовать Kafka, необходимо подключить зависимость к проекту в pom.xml
 
-```
+```xml
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
 ```
+ 
+Поле добавление зависимости, необходимо прописать настройка в properties
+```properties
+spring.kafka.consumer.bootstrap-servers: localhost:9092
+spring.kafka.consumer.group-id: jd
+spring.kafka.consumer.key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
 
+spring.kafka.producer.bootstrap-servers: localhost:9092
+spring.kafka.producer.key-serializer: org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+```
 
    
 
