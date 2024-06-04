@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import ru.zubov.planner_entity.entity.User;
 
@@ -18,8 +19,10 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 @RequiredArgsConstructor
 public class UserController {
     public static final String ID_COLUMN = "id"; // имя столбца id
+    private static final String TOPIC_NAME = "java-test";
 
     private final UserService userService;
+    private final KafkaTemplate<String, Long> kafkaTemplate;
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody User user) {
@@ -39,9 +42,9 @@ public class UserController {
 
         User newUser = userService.save(user);
 
-//        if (newUser.getId() != null) {  //если пользователь создан
-//            messageProducer.sendMessage(String.valueOf(newUser.getId()));     //отправляем сообщение с использованием mq
-//        }
+        if (newUser.getId() != null) {  //если пользователь создан
+            kafkaTemplate.send(TOPIC_NAME, newUser.getId());     //отправляем сообщение с использованием mq
+        }
         return ResponseEntity.ok(newUser);
     }
 
