@@ -8,8 +8,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.web.bind.annotation.*;
 import ru.zubov.planner_entity.entity.User;
+
+import java.util.concurrent.CompletableFuture;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -43,7 +46,13 @@ public class UserController {
         User newUser = userService.save(user);
 
         if (newUser.getId() != null) {  //если пользователь создан
-            kafkaTemplate.send(TOPIC_NAME, newUser.getId());     //отправляем сообщение с использованием mq
+            CompletableFuture<SendResult<String, Long>> future = kafkaTemplate.send(TOPIC_NAME, newUser.getId());//отправляем сообщение с использованием mq
+            future
+                    .thenAccept(result -> System.out.println("Sent user successfully!"))
+                    .exceptionally(ex -> {
+                        System.out.println("Sent user fail! " + ex.getMessage());
+                        return null;
+                    });
         }
         return ResponseEntity.ok(newUser);
     }
