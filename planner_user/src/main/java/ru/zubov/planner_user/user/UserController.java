@@ -25,7 +25,7 @@ public class UserController {
     private static final String TOPIC_NAME = "java-test";
 
     private final UserService userService;
-    private final KafkaTemplate<String, Long> kafkaTemplate;
+    private final KafkaTemplate<String, User> kafkaTemplate;
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody User user) {
@@ -46,7 +46,7 @@ public class UserController {
         User newUser = userService.save(user);
 
         if (newUser.getId() != null) {  //если пользователь создан
-            CompletableFuture<SendResult<String, Long>> future = kafkaTemplate.send(TOPIC_NAME, newUser.getId());//отправляем сообщение с использованием mq
+            CompletableFuture<SendResult<String, User>> future = kafkaTemplate.send(TOPIC_NAME, newUser);//отправляем сообщение с использованием mq
             future
                     .thenAccept(result -> System.out.println("Sent user successfully!"))
                     .exceptionally(ex -> {
