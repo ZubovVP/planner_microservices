@@ -110,7 +110,14 @@ Realm - рабочая область со всем данными и польз
 # Создание Client    
 Client – это ваше приложение Resource Server (backend-приложение), которое будет использовать Auth Server для валидации access token и других действий OAuth2, к которому пользователь захочет получить доступ.    
 ![img_11.png](img_11.png)    
-Указывайте ClientId любой, так же необходимо указать redirect url, на который Keycloak будет перенаправлять в случаее удачно авторизации.
+Указывайте ClientId любой, так же необходимо указать redirect url, на который Keycloak будет перенаправлять в случаее удачно авторизации.    
+
+
+
+Выполняется не в Postman, а в браузере.
+```url
+http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/auth?response_type=code&client_id=taskapp-client&state=safdasfdsf3232&scope=openid profile&redirect_uri=http://localhost:8080/redirect
+```
 
 
 
