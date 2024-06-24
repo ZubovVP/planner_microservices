@@ -130,16 +130,17 @@ Authorizarion Code можно использовать для классичес
 ![img_13.png](img_13.png)   
 ## Глобальные шаги:   
 
+* Переходим на ресурс
 * Вводим логин-пароль
 * Получаем специальный authorization code (AC)
 * Обмениваем AC на access token (AT)
+* Записываем AT в запрос
 * Получаем данные c Resource Server с помощью AT
 
 Выполняется не в Postman, а в браузере.
 ```url
 http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/auth?response_type=code&client_id=taskapp-client&state=safdasfdsf3232&scope=openid profile&redirect_uri=http://localhost:8080/redirect
 ```
-
 
 Post запрос позволяет получить access token(Запрос можно выполнить в Postman) 
 ```url
