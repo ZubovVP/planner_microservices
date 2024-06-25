@@ -137,7 +137,14 @@ Authorizarion Code можно использовать для классичес
 * Записываем AT в запрос
 * Получаем данные c Resource Server с помощью AT
 
-Выполняется не в Postman, а в браузере.
+## Настройка Authorizarion Code в KeyCloak
+
+1) В разделе Clients создаём client, указываем Client type - OpenID Connect, Client ID и name;
+2) Выбираем следующие параметры   
+3) ![img_14.png](img_14.png)
+4) Указываем Valid redirect URIs (на какие url можно будет осуществлять redirect);
+
+   Выполняется не в Postman, а в браузере.
 ```url
 http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/auth?response_type=code&client_id=taskapp-client&state=safdasfdsf3232&scope=openid profile&redirect_uri=http://localhost:8080/redirect
 ```
