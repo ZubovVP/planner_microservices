@@ -177,4 +177,7 @@ redirect_uri : http://localhost:8080/redirect (Берём из KeyCloak)
 
 # Proof Key for Code Exchange (PKCE)
 Такой Grand type подходит для приложения с отдельным фронтом (Single page application), т.к. client application (фронт) не может хранить в себе secret из KeyCloak
-![img_15.png](img_15.png)
+![img_15.png](img_15.png)   
+Для использования этого PKCE flow – нужно сделать следующее   
+![img_16.png](img_16.png)   
+, чтобы НЕ нужно было использовать secret для получения access token.
