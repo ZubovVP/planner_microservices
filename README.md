@@ -180,4 +180,6 @@ redirect_uri : http://localhost:8080/redirect (Берём из KeyCloak)
 ![img_15.png](img_15.png)   
 Для использования этого PKCE flow – нужно сделать следующее   
 ![img_16.png](img_16.png)   
-, чтобы НЕ нужно было использовать secret для получения access token.
+, чтобы НЕ нужно было использовать secret для получения access token.    
+*Code verifier* - это код, который создаётя на клиенте (на фронте)
+*Code challenge* - передаётся в запросе
