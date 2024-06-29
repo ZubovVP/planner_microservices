@@ -182,4 +182,15 @@ redirect_uri : http://localhost:8080/redirect (Берём из KeyCloak)
 ![img_16.png](img_16.png)   
 , чтобы НЕ нужно было использовать secret для получения access token.    
 *Code verifier* - это код, который создаётя на клиенте (на фронте)
-*Code challenge* - передаётся в запросе
+*Code challenge* - передаётся в запросе     
+```url
+http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/auth?response_type=code&client_id=taskapp-client-pkce&state=safdasfdsf3232&scope=openid profile&redirect_uri=https://localhost:8080/redirect&code challenge=jSnDo9Mn3e_9Oon-DyRceeewLwXTitg8_IBkTkYTn8s&code challenge method=s256
+```
+Параметры в запросе:
+response_type : code   
+client_id : taskapp-client-pkce (название вашего client)   
+state : safdasfdsf3232 (пока любые символы)   
+scope : openid profile (Тип протокола)   
+redirect_uri : https://localhost:8080/redirect (Берём из KeyCloak, допустимый Url для редиректа)    
+code challenge : jSnDo9Mn3e_9Oon-DyRceeewLwXTitg8_IBkTkYTn8s (можем взять значение из онлайнг генератора (https://tonyxu-io.github.io/pkce-generator/) )    
+code challenge method : s256 (алгоритм шифрования)    
