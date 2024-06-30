@@ -194,3 +194,8 @@ scope : openid profile (Тип протокола)
 redirect_uri : https://localhost:8080/redirect (Берём из KeyCloak, допустимый Url для редиректа)    
 code challenge : jSnDo9Mn3e_9Oon-DyRceeewLwXTitg8_IBkTkYTn8s (можем взять значение из онлайнг генератора (https://tonyxu-io.github.io/pkce-generator/) )    
 code challenge method : s256 (алгоритм шифрования)    
+В ответ мы получаем следующий url
+````url
+https://localhost:8080/redirect?state=safdasfdsf3232&session_state=a98d04d3-3de8-4fea-b69e-3f702c763f10&iss=http%3A%2F%2Flocalhost%3A8180%2Frealms%2Ftaskapp-realm&code=e00742d7-db37-4375-83f4-2748e2db9751.a98d04d3-3de8-4fea-b69e-3f702c763f10.46ff80a6-8242-4d3c-a33b-ef7e99e13af9
+````
+где code=e00742d7-db37-4375-83f4-2748e2db9751.a98d04d3-3de8-4fea-b69e-3f702c763f10.46ff80a6-8242-4d3c-a33b-ef7e99e13af9 - необходимый нам code.
