@@ -224,3 +224,7 @@ code verifier : aVgBrTntunLbEb63d_3FMKUxH9Ya0Zj8ykeJ670tqiI (передаем co
     "scope": "openid email profile"
 }
 ```
+# Client Credentials (CC)
+Client Credentials / machine-to-machine (M2M) / server-to-server / backend-to-backend  - это такой Grand Type в котором отсутствует окно авторизации, он предназначен для для вызовов между серверами или сервисами (один микросервис вызывает другой), либо работа по API.  Это актуально, когда микросервисы находятся в разных сетях.    
+## Схема работы     
+![img_17.png](img_17.png)
