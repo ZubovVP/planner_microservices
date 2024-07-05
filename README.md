@@ -231,4 +231,25 @@ Client Credentials / machine-to-machine (M2M) / server-to-server / backend-to-ba
 ## Настройка KeyCloak для CC
 Необходимо выбрать Clients и там указать настройки согласно картинкам: 
 ![img_18.png](img_18.png)    
-![img_19.png](img_19.png)    
+![img_19.png](img_19.png)   
+## Получение токена для CC
+```url
+http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/token
+```
+Параметры в Body:
+grant_type : client_credentials   
+client_id : taskapp-client-cc (название вашего client)   
+client_secret : xxx (берём из KeyCloack в разделе credentials)   
+scope : profile  
+В результате получаем что-то типо такого
+```json
+{
+   "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjdTIxUl9ydDh4RURUOWNmbkJlaXlBcTNKOWNhWm01N2ZJNFdhMnlVcHNRIn0.eyJleHAiOjE3MjIzNzA2OTMsImlhdCI6MTcyMjM3MDM5MywianRpIjoiNmJkMzg0YWUtMWVkYy00OTU5LThlYWQtYzI1NWE1NmJlM2NiIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL3JlYWxtcy90YXNrYXBwLXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjdjYTU1OTMwLWMxMzAtNDFhYS05OGNkLTA5YjFiMGRjMjBhZSIsInR5cCI6IkJlYXJlciIsImF6cCI6InRhc2thcHAtY2xpZW50LWNjIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDo4MDgwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXRhc2thcHAtcmVhbG0iLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiY2xpZW50SG9zdCI6IjA6MDowOjA6MDowOjA6MSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LXRhc2thcHAtY2xpZW50LWNjIiwiY2xpZW50QWRkcmVzcyI6IjA6MDowOjA6MDowOjA6MSIsImNsaWVudF9pZCI6InRhc2thcHAtY2xpZW50LWNjIn0.oTaIYmjxHuzkIF-lqvKmYrrBy44EF15KAK0wPu7tfeoqz30jY9UJ4JbPbL4l61xeCZkdtS-RRBIx7zYu7OGEVCONwVHg_ZVCwzpg6Gri7etpXUj7XrNUTorbPGp9uRQ04BFll8kfFEAarPdqvgh0CrPjxh6PGPXlO6RoG-WX7iUWPlvGax5nrOTJ5xj_JZdk2Eit4TWVbnKCw5KGsis-aWoJMkGth_fAhLopRfj1hn1fGTMvpgd5dVXA4tWSpXDSAEkBtuFw0JQKTcr2_PzzyowzDDqBNCdwBZf3oFKlv8mUWWHjofhO_IJNPhXf2Gb2jv2W2c7P8qb8E43PZ5LfVA",
+   "expires_in": 300,
+   "refresh_expires_in": 0,
+   "token_type": "Bearer",
+   "not-before-policy": 0,
+   "scope": "email profile"
+}
+```
+, где access_token и есть полученный токен.
