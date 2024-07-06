@@ -173,7 +173,8 @@ redirect_uri : http://localhost:8080/redirect (Берём из KeyCloak)
     "scope": "openid email profile"
 }
 ```
-Где access_token есть как раз токен авторизации.
+Где access_token - это как раз есть токен авторизации.   
+id_token - это токее, который содержит информацию о пользователе в формате JWT.   
 
 # Proof Key for Code Exchange (PKCE)
 Такой Grand type подходит для приложения с отдельным фронтом (Single page application), т.к. client application (фронт) не может хранить в себе secret из KeyCloak
@@ -224,6 +225,9 @@ code verifier : aVgBrTntunLbEb63d_3FMKUxH9Ya0Zj8ykeJ670tqiI (передаем co
     "scope": "openid email profile"
 }
 ```
+Где access_token - это как раз есть токен авторизации.   
+id_token - это токее, который содержит информацию о пользователе в формате JWT.   
+
 # Client Credentials (CC)
 Client Credentials / machine-to-machine (M2M) / server-to-server / backend-to-backend  - это такой Grand Type в котором отсутствует окно авторизации, он предназначен для для вызовов между серверами или сервисами (один микросервис вызывает другой), либо работа по API.  Это актуально, когда микросервисы находятся в разных сетях.    
 ## Схема работы     
