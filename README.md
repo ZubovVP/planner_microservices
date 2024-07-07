@@ -189,6 +189,19 @@ id_token - это токее, который содержит информаци
 , чтобы НЕ нужно было использовать secret для получения access token.    
 *Code verifier* - это код, который создаёт на клиенте (на фронте)
 *Code challenge* - передаётся в запросе     
+## Глобальные шаги:
+
+* Переходим на ресурс
+* Получаем code challenge и Code verifier
+* Вводим логин-пароль и отправляем code challenge
+* Получаем специальный authorization code (AC)
+* Обмениваем AC на access token (AT)
+* Записываем AT в запрос
+* Получаем данные c Resource Server с помощью AT
+
+
+## Запросы:
+
 ```url
 http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/auth?response_type=code&client_id=taskapp-client-pkce&state=safdasfdsf3232&scope=openid profile&redirect_uri=https://localhost:8080/redirect&code challenge=jSnDo9Mn3e_9Oon-DyRceeewLwXTitg8_IBkTkYTn8s&code challenge method=s256
 ```
