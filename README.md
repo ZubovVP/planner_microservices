@@ -153,8 +153,19 @@ Authorizarion Code можно использовать для классичес
 ```url
 http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/auth?response_type=code&client_id=taskapp-client&state=safdasfdsf3232&scope=openid profile&redirect_uri=http://localhost:8080/redirect
 ```
+Параметры в запросе:
+response_type : code   
+client_id : taskapp-client (название вашего client)   
+state : safdasfdsf3232 (пока любые символы)   
+scope : openid profile (Тип протокола)(при указании такого параметра, мы будем получать в ответе id_token вместе с access_token, если не укажем, то придёт только access_token)       
+redirect_uri : https://localhost:8080/redirect (Берём из KeyCloak, допустимый Url для редиректа)     
+Вводим логин и пароль и получаем ответ в виде url: 
+```url
+http://localhost:8080/redirect?state=safdasfdsf3232&session_state=4e920d8f-6220-4d1e-b1d5-980f4eaab4f4&iss=http%3A%2F%2Flocalhost%3A8180%2Frealms%2Ftaskapp-realm&code=7205f432-d0c8-409e-af3c-ca94ca4cd825.4e920d8f-6220-4d1e-b1d5-980f4eaab4f4.d9216bcf-b596-4a70-b087-52f503b13e9f
+```
+Из этого url нам необходим параметр code.    
 
-Post запрос позволяет получить access token(Запрос можно выполнить в Postman) 
+Следующим этапом выполняем Post запрос позволяет получить access token(Запрос можно выполнить в Postman) 
 ```url
 http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/token
 ```
@@ -162,7 +173,7 @@ http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/token
 grant_type : authorization_code   
 client_id : taskapp-client (название вашего client)   
 client_secret : xxx (Берём из KeyCloak в разделе Credentials)   
-code : xxx (Берём из ранее полученного ответа)   
+code : xxx (Берём из ранее полученного первого ответа)   
 redirect_uri : http://localhost:8080/redirect (Берём из KeyCloak)   
 В результате получаем что-то типо такого 
 ```json
@@ -209,7 +220,7 @@ http://localhost:8180/realms/taskapp-realm/protocol/openid-connect/auth?response
 response_type : code   
 client_id : taskapp-client-pkce (название вашего client)   
 state : safdasfdsf3232 (пока любые символы)   
-scope : openid profile (Тип протокола)   
+scope : openid profile (Тип протокола)(при указании такого параметра, мы будем получать в ответе id_token вместе с access_token, если не укажем, то придёт только access_token)       
 redirect_uri : https://localhost:8080/redirect (Берём из KeyCloak, допустимый Url для редиректа)    
 code challenge : jSnDo9Mn3e_9Oon-DyRceeewLwXTitg8_IBkTkYTn8s (можем взять значение из онлайнг генератора (https://tonyxu-io.github.io/pkce-generator/) )    
 code challenge method : s256 (алгоритм шифрования)    
